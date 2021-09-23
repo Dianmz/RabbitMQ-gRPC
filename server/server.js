@@ -4,7 +4,6 @@ const app=new express();
 app.use(express.json({limit:'5mb', extended:true}));
 
 app.post('/', async (req,res)=>{
-    const data=req.body;
     try{
         res.json(result.ops[0]);
     }catch(err){
