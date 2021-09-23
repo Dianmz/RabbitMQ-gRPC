@@ -12,8 +12,8 @@ import (
 )
 
 const (
-	//address = "grpc-server:4000"
 	address = "localhost:4000"
+	//address = "localhost:4000"
 )
 
 func failOnError(err error, msg string) {

@@ -22,11 +22,14 @@ services:
 
   grpc-client:
       build: ./grpc/client
+      restart: on-failure
       ports:
         - "8000:8000"
 
   grpc-server:
       build: ./grpc/server
+      restart: on-failure
 
   server:
       build: ./server
+      restart: on-failure
