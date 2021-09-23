@@ -38,9 +38,6 @@ func newElement(w http.ResponseWriter, r *http.Request) {
 	body["way"] = "GRPC"
 	data, err := json.Marshal(body)
 
-	// newData := string(data)
-
-	// Server Connection
 	conn, err := grpc.Dial(address, grpc.WithInsecure(), grpc.WithBlock())
 	failOnError(err, "GRPC Connection")
 	defer conn.Close()
@@ -50,12 +47,7 @@ func newElement(w http.ResponseWriter, r *http.Request) {
 	ctx, cancel := context.WithTimeout(context.Background(), time.Second)
 	defer cancel()
 
-	// ======================================================================
-	// ================= 'string(data)' ES LO QUE SE GUARDA =================
-	//Sending data
 	re, err := cli.SayHello(ctx, &pb.HelloRequest{Name: string(data)})
-	// ======================================================================
-	// ======================================================================
 
 	if err != nil {
 		failOnError(err, "Error al enviar el mensaje")
@@ -70,8 +62,8 @@ func newElement(w http.ResponseWriter, r *http.Request) {
 
 func handleRequest() {
 	http.HandleFunc("/", newElement)
-	log.Print("Client listenin on port: 8000")
-	log.Fatal(http.ListenAndServe(":8000", nil))
+	log.Print("Client listenin on port: 9000")
+	log.Fatal(http.ListenAndServe(":9000", nil))
 }
 
 func main() {

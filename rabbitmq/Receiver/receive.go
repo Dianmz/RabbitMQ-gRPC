@@ -1,10 +1,7 @@
 package main
 
 import (
-	"bytes"
-	"io/ioutil"
 	"log"
-	"net/http"
 
 	"github.com/streadway/amqp"
 )
@@ -55,18 +52,6 @@ func main() {
 	go func() {
 		for d := range msgs {
 			log.Printf("Received a message: %s", d.Body)
-
-			postBody := []byte(string(d.Body))
-			req, err := http.Post("http://localhost:5000/", "application/json", bytes.NewBuffer(postBody))
-			req.Header.Set("Content-Type", "application/json")
-			failOnError(err, "POST new document")
-			defer req.Body.Close()
-
-			//Read the response body
-			newBody, err := ioutil.ReadAll(req.Body)
-			failOnError(err, "Reading response from HTTP POST")
-			sb := string(newBody)
-			log.Printf(sb)
 		}
 	}()
 

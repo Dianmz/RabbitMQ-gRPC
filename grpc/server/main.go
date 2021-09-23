@@ -1,12 +1,9 @@
 package main
 
 import (
-	"bytes"
 	"context"
-	"io/ioutil"
 	"log"
 	"net"
-	"net/http"
 
 	"google.golang.org/grpc"
 	pb "google.golang.org/grpc/examples/helloworld/helloworld"
@@ -28,20 +25,8 @@ type server struct {
 
 func (s *server) SayHello(ctx context.Context, in *pb.HelloRequest) (*pb.HelloReply, error) {
 	log.Printf("Received: %v", in.GetName())
+	return &pb.HelloReply{Message: in.GetName()}, nil
 
-	postBody := []byte(string(in.GetName()))
-	req, err := http.Post("http://localhost:5000/", "application/json", bytes.NewBuffer(postBody))
-	req.Header.Set("Content-Type", "application/json")
-	failOnError(err, "POST new document")
-	defer req.Body.Close()
-
-	// Read the response body
-	newBody, err := ioutil.ReadAll(req.Body)
-	failOnError(err, "Reading response from HTTP POST")
-	sb := string(newBody)
-	log.Printf(sb)
-
-	return &pb.HelloReply{Message: sb}, nil
 }
 
 func main() {
