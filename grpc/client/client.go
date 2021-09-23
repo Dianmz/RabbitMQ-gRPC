@@ -70,7 +70,7 @@ func newElement(w http.ResponseWriter, r *http.Request) {
 
 func handleRequest() {
 	http.HandleFunc("/", newElement)
-	log.Fatal(http.ListenAndServe(":3000", nil))
+	log.Fatal(http.ListenAndServe(":8000", nil))
 }
 
 func main() {

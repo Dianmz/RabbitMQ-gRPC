@@ -7,18 +7,26 @@ services:
           - "15672:15672"
 
   publisher-rmq:
-      build: ./Sender
+      build: ./rabbitmq/Sender
       restart: on-failure
       ports:
-        - "80:3000"
+        - "3000:3000"
       depends_on:
         - rabbitmq
 
   consumer-rmq:
-      build: ./Receiver
+      build: ./rabbitmq/Receiver
       restart: on-failure
       depends_on:
         - rabbitmq
+
+  grpc-client:
+      build: ./grpc/client
+      ports:
+        - "8000:8000"
+
+  grpc-server:
+      build: ./grpc/server
 
   server:
       build: ./server
