@@ -12,7 +12,7 @@ import (
 )
 
 const (
-	address = "localhost:4000"
+	address = "grpc-server:4000"
 	//address = "localhost:4000"
 )
 
@@ -70,6 +70,7 @@ func newElement(w http.ResponseWriter, r *http.Request) {
 
 func handleRequest() {
 	http.HandleFunc("/", newElement)
+	log.Print("Client listenin on port: 8000")
 	log.Fatal(http.ListenAndServe(":8000", nil))
 }
 
